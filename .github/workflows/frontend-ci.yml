@@ -1,0 +1,102 @@
+# Workflow name
+name: Frontend Continuous Integration
+
+# Triggers for the workflow
+on:
+  # Manual trigger using the workflow_dispatch event
+  workflow_dispatch:
+      
+  # Automatic trigger on pull request events targeting the main branch
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+
+    steps:
+      # Check out the code from the repository.
+      - uses: actions/checkout@v3
+
+      # Set up a Node.js environment using the specified node version.
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: Install dependencies
+        run: npm install --prefix starter/frontend
+
+      - name: Lint code
+        run: npm run lint --prefix starter/frontend -- --fix
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+
+    steps:
+      # Check out the code from the repository.
+      - uses: actions/checkout@v3
+
+      # Set up a Node.js environment using the specified node version.
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: Install dependencies
+        run: npm install --prefix starter/frontend
+
+      - name: Run tests
+        run: npm test --prefix starter/frontend 
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+
+    steps:
+      # Check out the code from the repository.
+      - uses: actions/checkout@v3
+
+      # Set up a Node.js environment using the specified node version.
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: Build application
+        run: |
+          # 
+          docker build -t my-app -f starter/frontend/Dockerfile .
+
+     
