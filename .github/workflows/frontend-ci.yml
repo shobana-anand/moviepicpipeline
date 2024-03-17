@@ -36,10 +36,10 @@ jobs:
             ${{ runner.os }}-npm-
 
       - name: Install dependencies
-        run: npm install --prefix starter/frontend
+        run: npm install 
 
       - name: Lint code
-        run: npm run lint --prefix starter/frontend -- --fix
+        run: npm run lint -- --fix
 
   test:
     runs-on: ubuntu-latest
