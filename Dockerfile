@@ -7,6 +7,7 @@ WORKDIR /app
 
 # Copy dependdency files
 COPY package*.json ./
+COPY starter/frontend/public/index.html ./app/public/
 
 
 # Install packages
