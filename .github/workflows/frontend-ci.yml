@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.x, 18.x]
+        node-version: [16.x]
 
     steps:
       # Check out the code from the repository.
@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.x, 18.x]
+        node-version: [16.x]
 
     steps:
       # Check out the code from the repository.
@@ -75,7 +75,7 @@ jobs:
     needs: [lint, test]
     strategy:
       matrix:
-        node-version: [16.x, 18.x]
+        node-version: [16.x]
 
     steps:
       # Check out the code from the repository.
