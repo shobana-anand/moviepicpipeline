@@ -7,14 +7,13 @@ WORKDIR /app
 
 # Copy dependdency files
 COPY package*.json ./
-COPY starter/frontend/public/index.html ./public/
 
 
 # Install packages
 RUN npm install
 
 # Copy code
-COPY . .
+COPY . ./
 
 # Build the app
 RUN npm run build
