@@ -34,7 +34,6 @@ jobs:
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-npm-
-
       - name: Install dependencies
         run: npm install 
 
@@ -63,12 +62,11 @@ jobs:
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-npm-
-
       - name: Install dependencies
-        run: npm install --prefix starter/frontend
+        run: npm install 
 
       - name: Run tests
-        run: npm test --prefix starter/frontend 
+        run: npm test 
 
   build:
     runs-on: ubuntu-latest
@@ -93,10 +91,7 @@ jobs:
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-npm-
-
       - name: Build application
         run: |
           # 
           docker build -t my-app -f starter/frontend/Dockerfile .
-
-     
